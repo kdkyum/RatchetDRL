@@ -1,0 +1,13 @@
+tqdm
+torch
+torchvision
+tensorboard
+ipython
+ipykernel
+joblib
+matplotlib
+numpy
+pandas
+scipy
+seaborn
+cloudpickle~=1.2.1
