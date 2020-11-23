@@ -6,7 +6,7 @@ __all__ = ["CFR_A", "CFR_B", "CFR_A_delay", "CFR_B_delay", "CFR_open"]
 
 
 class CollectiveFlashingRatchet(Env):
-    def __init__(self, M=1, N=1, a=1, T=1, U=5, e=1, dt=0.001, bins=-1):
+    def __init__(self, M=1, N=1, a=1, T=1, U=5, e=1, dt=0.001):
         # M: number of ensembles
         # N: number of particles
         # a: system size
@@ -76,8 +76,8 @@ class CollectiveFlashingRatchet(Env):
 
 
 class CFR_A(CollectiveFlashingRatchet):
-    def __init__(self, M=1, N=1, a=1, T=1, U=5, e=1, dt=0.001, bins=-1):
-        super().__init__(M, N, a, T, U, e, dt, bins)
+    def __init__(self, M=1, N=1, a=1, T=1, U=5, e=1, dt=0.001):
+        super().__init__(M, N, a, T, U, e, dt)
 
     def potential(self, x):
         U = self.U * (
@@ -96,8 +96,8 @@ class CFR_A(CollectiveFlashingRatchet):
 
 
 class CFR_B(CollectiveFlashingRatchet):
-    def __init__(self, M=1, N=1, a=1, T=1, U=5, e=1, dt=0.001, bins=-1):
-        super().__init__(M, N, a, T, U, e, dt, bins)
+    def __init__(self, M=1, N=1, a=1, T=1, U=5, e=1, dt=0.001):
+        super().__init__(M, N, a, T, U, e, dt)
 
     def potential(self, x):
         m = np.mod(x, self.a)
@@ -115,10 +115,10 @@ class CFR_B(CollectiveFlashingRatchet):
 
 
 class CFR_A_delay(CFR_A):
-    def __init__(self, M=1, N=1, a=1, T=1, U=5, e=1, dt=0.001, bins=-1, delay=20):
+    def __init__(self, M=1, N=1, a=1, T=1, U=5, e=1, dt=0.001, delay=20):
         self.delay = delay
         self.delayed_queue = []
-        super().__init__(M, N, a, T, U, e, dt, bins)
+        super().__init__(M, N, a, T, U, e, dt)
         self.x_max1 = self.a * (np.arctan(np.sqrt(-3 + 2 * np.sqrt(3))) / np.pi)
         self.x_max2 = self.x_max1 + self.a
         self.x_min = -0.19035916268766679 + self.a
@@ -171,8 +171,8 @@ class CFR_A_delay(CFR_A):
 
 
 class CFR_B_delay(CFR_A_delay):
-    def __init__(self, M=1, N=1, a=1, T=1, U=5, e=1, dt=0.001, bins=-1, delay=20):
-        super().__init__(M, N, a, T, U, e, dt, bins, delay)
+    def __init__(self, M=1, N=1, a=1, T=1, U=5, e=1, dt=0.001, delay=20):
+        super().__init__(M, N, a, T, U, e, dt, delay)
 
     def potential(self, x):
         m = np.mod(x, self.a)
@@ -190,8 +190,8 @@ class CFR_B_delay(CFR_A_delay):
 
 
 class CFR_open(CollectiveFlashingRatchet):
-    def __init__(self, M=1, N=1, a=1, T=1, U=5, e=1, dt=0.001, bins=-1):
-        super().__init__(M, N, a, T, U, e, dt, bins)
+    def __init__(self, M=1, N=1, a=1, T=1, U=5, e=1, dt=0.001):
+        super().__init__(M, N, a, T, U, e, dt)
         self.observation_space.shape = (self.N, 1)
 
     def get_obs(self):
