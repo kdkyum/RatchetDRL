@@ -6,8 +6,9 @@ import shutil
 import time
 import warnings
 
-import cloudpickle
+import joblib
 import numpy as np
+import torch
 from torch.utils.tensorboard import SummaryWriter
 from user_config import (
     DEFAULT_DATA_DIR,
@@ -255,10 +256,49 @@ class Logger:
         """
         fname = "vars.pkl" if itr is None else "vars%d.pkl" % itr
         try:
-            with open(osp.join(self.output_dir, fname), 'wb') as f:
-                cloudpickle.dump(state_dict, f)
+            joblib.dump(state_dict, osp.join(self.output_dir, fname))
         except:
             self.log("Warning: could not pickle state_dict.", color="red")
+        if hasattr(self, "pytorch_saver_elements"):
+            self._pytorch_simple_save(itr)
+
+    def setup_pytorch_saver(self, what_to_save):
+        """
+        Set up easy model saving for a single PyTorch model.
+        Because PyTorch saving and loading is especially painless, this is
+        very minimal; we just need references to whatever we would like to
+        pickle. This is integrated into the logger because the logger
+        knows where the user would like to save information about this
+        training run.
+        Args:
+            what_to_save: Any PyTorch model or serializable object containing
+                PyTorch models.
+        """
+        self.pytorch_saver_elements = what_to_save
+
+    def _pytorch_simple_save(self, itr=None):
+        """
+        Saves the PyTorch model (or models).
+        """
+        assert hasattr(
+            self, "pytorch_saver_elements"
+        ), "First have to setup saving with self.setup_pytorch_saver"
+        fpath = "pyt_save"
+        fpath = osp.join(self.output_dir, fpath)
+        fname = "model" + ("%d" % itr if itr is not None else "") + ".pt"
+        fname = osp.join(fpath, fname)
+        os.makedirs(fpath, exist_ok=True)
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            # We are using a non-recommended way of saving PyTorch models,
+            # by pickling whole objects (which are dependent on the exact
+            # directory structure at the time of saving) as opposed to
+            # just saving network weights. This works sufficiently well
+            # for the purposes of Spinning Up, but you may want to do
+            # something different for your personal PyTorch project.
+            # We use a catch_warnings() context to avoid the warnings about
+            # not being able to save the source code.
+            torch.save(self.pytorch_saver_elements, fname)
 
     def dump_tabular(self):
         """
