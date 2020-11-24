@@ -1,0 +1,30 @@
+{
+    "ac_kwargs":	{},
+    "actor_critic":	"ActorCritic",
+    "arch":	"mlp",
+    "batch_size":	4096,
+    "burn_in":	2000,
+    "clip_ratio":	0.2,
+    "device":	"cuda:0",
+    "env_kwargs":	{
+        "N":	2,
+        "U":	5,
+        "a":	1,
+        "dt":	0.001
+    },
+    "env_name":	"CFR_A",
+    "epochs":	400,
+    "exp_name":	"ppo_CFR-A_Arch-mlp_N2",
+    "gamma":	0.999,
+    "lam":	0.95,
+    "num_trjs":	512,
+    "pi_lr":	0.0003,
+    "save_freq":	10,
+    "seed":	4,
+    "target_kl":	0.01,
+    "test_batch_size":	8192,
+    "train_pi_iters":	625,
+    "train_v_iters":	625,
+    "trj_len":	2000,
+    "vf_lr":	0.001
+}
