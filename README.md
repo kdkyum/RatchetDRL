@@ -48,6 +48,16 @@ python main.py -a ds --env A_delay --N 4 --delay 10
 python main_rnn.py --env A_delay --N 4 --delay 10 
 ```
 
+## Results
+### Data
+* `data/results` contains the all results (csv files) of the runs in the paper.
+* `data/runs` contains the training logs and trained policy and value networks.
+
+### Figures
+* notebook files for plotting the figures in the paper.
+  * [`data/Fig1-2-policy.ipynb`](data/Fig1-2-policy.ipynb): Figs. 1 and 2 (Decision boundaries for N=1 and N=2 cases).
+  * [`data/Fig3-PPO_results.ipynb`](data/Fig3-PPO_results.ipynb): Fig. 3 (Results of PPO algorithm).
+  * [`data/Fig1-2-policy.ipynb`](data/Fig1-2-policy.ipynb): Figs. 4 and 5 (Results of time-delayed feedback controls).
 ## Acknowledgement
 
 This repository is built off the publicly released repository [openai/spinningup](https://github.com/openai/spinningup).
