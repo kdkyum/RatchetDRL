@@ -42,8 +42,6 @@ def load_policy_and_env(fpath, itr="last", deterministic=False):
 
 
 def load_pytorch_policy(fpath, itr, deterministic=False, device="cuda"):
-    """ Load a pytorch policy saved with Spinning Up Logger."""
-
     fname = osp.join(fpath, "pyt_save", "model" + itr + ".pt")
     print("Loading from %s.\n" % fname)
 
@@ -118,17 +116,19 @@ if __name__ == "__main__":
     parser.add_argument("--deterministic", "-d", action="store_true")
     args = parser.parse_args()
 
-    s = 'deterministic' if args.deterministic else 'stochastic'
-    print("Testing policy (%s)...\n" %s + "=" * 50 + "\n")
+    s = "deterministic" if args.deterministic else "stochastic"
+    print("Testing policy (%s)...\n" % s + "=" * 50 + "\n")
     env, get_action, get_p = load_policy_and_env(
         args.fpath, args.itr if args.itr >= 0 else "last", args.deterministic
     )
     _, _, ret = run_policy(env, get_action, trj_len=args.len)
     mean_r, std_r, max_r, min_r = ret.mean(), ret.std(), ret.max(), ret.min()
-    df = pd.DataFrame([{'AvgRet': mean_r, 'StdRet': std_r, 'MaxRet': max_r, 'MinRet': min_r}])
+    df = pd.DataFrame(
+        [{"AvgRet": mean_r, "StdRet": std_r, "MaxRet": max_r, "MinRet": min_r}]
+    )
     if args.deterministic:
-        df.to_csv(osp.join(args.fpath, 'test_deterministic.csv'), index=False)
+        df.to_csv(osp.join(args.fpath, "test_deterministic.csv"), index=False)
     else:
-        df.to_csv(osp.join(args.fpath, 'test_stochastic.csv'), index=False)
+        df.to_csv(osp.join(args.fpath, "test_stochastic.csv"), index=False)
 
     print("=" * 50)

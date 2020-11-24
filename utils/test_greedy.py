@@ -28,18 +28,19 @@ def run_policy(env, get_action, log=False, burn_in=5000, trj_len=4000):
 
 def run_greedy(N, delay, env_name, trj_len, **env_kwargs):
     burn_in = 2000
-    env_kwargs['N'] = N
-    env_kwargs['delay'] = delay
+    env_kwargs["N"] = N
+    env_kwargs["delay"] = delay
     env = envs.__dict__[env_name](**env_kwargs)
     get_action = env.get_greedy_action()
     rew = run_policy(env, get_action, burn_in=burn_in, trj_len=trj_len)
-    env_kwargs['trj_len'] = trj_len
-    env_kwargs['env_name'] = env_name
-    env_kwargs['rew_mean'] = rew.mean()
-    env_kwargs['rew_std'] = rew.std()
+    env_kwargs["trj_len"] = trj_len
+    env_kwargs["env_name"] = env_name
+    env_kwargs["rew_mean"] = rew.mean()
+    env_kwargs["rew_std"] = rew.std()
     ret = deepcopy(env_kwargs)
     print(ret)
     return ret
+
 
 if __name__ == "__main__":
     import argparse
@@ -60,10 +61,8 @@ if __name__ == "__main__":
     star = product(*configs)
 
     env_kwargs = {}
-    env_kwargs['M'] = args.num_trj
-    run = partial(
-        run_greedy, env_name=args.env, trj_len=args.trj_len, **env_kwargs
-    )
+    env_kwargs["M"] = args.num_trj
+    run = partial(run_greedy, env_name=args.env, trj_len=args.trj_len, **env_kwargs)
     with Pool(args.num_cpu) as p:
         rets = list(p.starmap(run, star))
 

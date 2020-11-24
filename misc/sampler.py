@@ -13,10 +13,10 @@ class BatchSampler:
         train: if True randomly sample a subset else ordered sample. (default: True)
     Examples::
         >>> # 10 trajectories, trajectory length 100, batch size 32 for training
-        >>> sampler = BatchSampler(10, 100, 32) 
+        >>> sampler = BatchSampler(10, 100, 32)
         >>> batch = next(sampler)
         >>> # 5 trajectories, trajectory length 50, batch size 32 for test
-        >>> test_sampler = BatchSampler(5, 50, 32, train=False) 
+        >>> test_sampler = BatchSampler(5, 50, 32, train=False)
         >>> batch = next(test_sampler)
         >>> for batch in test_sampler:
         >>>     print(batch)
@@ -68,10 +68,10 @@ class CartesianSampler(BatchSampler):
         train: if True randomly sample a subset else ordered sample. (default: True)
     Examples::
         >>> # 10 trajectories, trajectory length 100, batch size 32 for training
-        >>> sampler = CartesianSampler(10, 100, 32) 
+        >>> sampler = CartesianSampler(10, 100, 32)
         >>> batch, next_batch = next(sampler)
         >>> # 5 trajectories, trajectory length 50, batch size 32 for test
-        >>> test_sampler = CartesianSampler(5, 50, 32, train=False) 
+        >>> test_sampler = CartesianSampler(5, 50, 32, train=False)
         >>> batch, next_batch = next(test_sampler)
         >>> for batch, next_batch in test_sampler:
         >>>     print(batch, next_batch)
@@ -110,9 +110,10 @@ class CartesianSampler(BatchSampler):
             next_batch = (ens_idx, traj_idx + 1)
             return batch, next_batch
 
+
 class CartesianSeqSampler(CartesianSampler):
     def __init__(self, M, L, n, batch_size, device="cpu", train=True):
-        """Random subset with sequence length of n sampling from 
+        """Random subset with sequence length of n sampling from
            {0, 1, ..., M-1} X {0, 1, ..., L-n} where X is Cartesian product.
 
         Attributes:
@@ -125,11 +126,11 @@ class CartesianSeqSampler(CartesianSampler):
         Examples::
 
             >>> # 10 trajectories, trajectory length 100, sequence length 64, batch size 32 for training
-            >>> sampler = CartesianSeqSampler(10, 100, 64, 32) 
+            >>> sampler = CartesianSeqSampler(10, 100, 64, 32)
             >>> batch = next(sampler)
 
             >>> # 5 trajectories, trajectory length 50, sequence length 32, batch size 64 for test
-            >>> test_sampler = CartesianSeqSampler(5, 50, 32, 64, train=False) 
+            >>> test_sampler = CartesianSeqSampler(5, 50, 32, 64, train=False)
             >>> batch = next(test_sampler)
             >>> for batch in test_sampler:
             >>>     print(batch)
@@ -139,7 +140,7 @@ class CartesianSeqSampler(CartesianSampler):
             M, L, batch_size, device=device, train=train
         )
         self.size = M * (L - n + 1)
-        self.dropL = L-n+1 #torch.arange(0, L, n - 1)[-1].item()
+        self.dropL = L - n + 1  # torch.arange(0, L, n - 1)[-1].item()
         self.test_size = self.dropL * M
         self.seq_length = n
         self.trj_idx = torch.ones(
@@ -170,16 +171,10 @@ class CartesianSeqSampler(CartesianSampler):
                 next_idx = prev_idx + batch_size
 
             ens_idx = (
-                torch.arange(
-                    prev_idx, next_idx, 1, device=self.device
-                )
-                // self.dropL
+                torch.arange(prev_idx, next_idx, 1, device=self.device) // self.dropL
             )
             traj_idx = (
-                torch.arange(
-                    prev_idx, next_idx, 1, device=self.device
-                )
-                % self.dropL
+                torch.arange(prev_idx, next_idx, 1, device=self.device) % self.dropL
             )
 
             if isLast:

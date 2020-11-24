@@ -13,9 +13,8 @@ from textwrap import dedent
 
 import cloudpickle
 import numpy as np
-from tqdm import trange
-
 from misc.logger import colorize, convert_json, setup_logger_kwargs
+from tqdm import trange
 from user_config import (
     DEFAULT_DATA_DIR,
     DEFAULT_SHORTHAND,
@@ -31,16 +30,16 @@ def call_experiment(exp_name, thunk, seed=0, data_dir=None, datestamp=False, **k
     Run a function (thunk) with hyperparameters (kwargs), plus configuration.
     This wraps a few pieces of functionality which are useful when you want
     to run many experiments in sequence, including logger configuration and
-    splitting into multiple processes for MPI. 
+    splitting into multiple processes for MPI.
     There's also a SpinningUp-specific convenience added into executing the
     thunk: if ``env_name`` is one of the kwargs passed to call_experiment, it's
     assumed that the thunk accepts an argument called ``env_fn``, and that
-    the ``env_fn`` should make a gym environment with the given ``env_name``. 
+    the ``env_fn`` should make a gym environment with the given ``env_name``.
     The way the experiment is actually executed is slightly complicated: the
     function is serialized to a string, and then ``run_entrypoint.py`` is
     executed in a subprocess call with the serialized string as an argument.
     ``run_entrypoint.py`` unserializes the function call and executes it.
-    We choose to do it this way---instead of just calling the function 
+    We choose to do it this way---instead of just calling the function
     directly here---to avoid leaking state between successive experiments.
     Args:
         exp_name (string): Name for experiment.
@@ -48,7 +47,7 @@ def call_experiment(exp_name, thunk, seed=0, data_dir=None, datestamp=False, **k
         seed (int): Seed for random number generators.
         data_dir (string): Used in configuring the logger, to decide where
             to store experiment results. Note: if left as None, data_dir will
-            default to ``DEFAULT_DATA_DIR`` from ``spinup/user_config.py``. 
+            default to ``DEFAULT_DATA_DIR`` from ``user_config.py``.
         **kwargs: All kwargs to pass to thunk.
     """
 
@@ -133,7 +132,7 @@ def all_bools(vals):
 
 
 def valid_str(v):
-    """ 
+    """
     Convert a value or values to a string which could go in a filepath.
     Partly based on `this gist`_.
     .. _`this gist`: https://gist.github.com/seanh/93666
@@ -225,13 +224,13 @@ class ExperimentGrid:
         By default, if a shorthand isn't given, one is automatically generated
         from the key using the first three letters of each colon-separated
         term. To disable this behavior, change ``DEFAULT_SHORTHAND`` in the
-        ``spinup/user_config.py`` file to ``False``. 
+        ``user_config.py`` file to ``False``.
         Args:
             key (string): Name of parameter.
             vals (value or list of values): Allowed values of parameter.
-            shorthand (string): Optional, shortened name of parameter. For 
+            shorthand (string): Optional, shortened name of parameter. For
                 example, maybe the parameter ``steps_per_epoch`` is shortened
-                to ``steps``. 
+                to ``steps``.
             in_name (bool): When constructing variant names, force the
                 inclusion of this parameter into the name.
         """
@@ -251,8 +250,8 @@ class ExperimentGrid:
     def variant_name(self, variant):
         """
         Given a variant (dict of valid param/value pairs), make an exp_name.
-        A variant's name is constructed as the grid name (if you've given it 
-        one), plus param names (or shorthands if available) and values 
+        A variant's name is constructed as the grid name (if you've given it
+        one), plus param names (or shorthands if available) and values
         separated by underscores.
         Note: if ``seed`` is a parameter, it is not included in the name.
         """
@@ -341,13 +340,13 @@ class ExperimentGrid:
                         a : 1,
                         b : 2
                         }
-                    }    
+                    }
                 }
         """
         flat_variants = self._variants(self.keys, self.vals)
 
         def unflatten_var(var):
-            """ 
+            """
             Build the full nested dict version of var, based on key names.
             """
             new_var = dict()
@@ -386,10 +385,10 @@ class ExperimentGrid:
         """
         Run each variant in the grid with function 'thunk'.
         Note: 'thunk' must be either a callable function, or a string. If it is
-        a string, it must be the name of a parameter whose values are all 
+        a string, it must be the name of a parameter whose values are all
         callable functions.
         Uses ``call_experiment`` to actually launch each experiment, and gives
-        each variant a name using ``self.variant_name()``. 
+        each variant a name using ``self.variant_name()``.
         Maintenance note: the args for ExperimentGrid.run should track closely
         to the args for call_experiment. However, ``seed`` is omitted because
         we presume the user may add it as a parameter in the grid.
@@ -419,7 +418,7 @@ class ExperimentGrid:
                         """
             Launch delayed to give you a few seconds to review your experiments.
             To customize or disable this behavior, change WAIT_BEFORE_LAUNCH in
-            spinup/user_config.py.
+            user_config.py.
             """
                     ),
                     color="cyan",

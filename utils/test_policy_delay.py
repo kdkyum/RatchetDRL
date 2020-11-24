@@ -42,8 +42,6 @@ def load_policy_and_env(fpath, itr="last", deterministic=False):
 
 
 def load_pytorch_policy(fpath, itr, deterministic=False, device="cuda"):
-    """ Load a pytorch policy saved with Spinning Up Logger."""
-
     fname = osp.join(fpath, "pyt_save", "model" + itr + ".pt")
     print("Loading from %s.\n" % fname)
 
