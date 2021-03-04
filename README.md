@@ -1,6 +1,6 @@
 
 ---
-# Deep Reinforcement Learning for Feedback Control in a Collective Flashing Ratchet
+# Deep reinforcement learning for feedback control in a collective flashing ratchet
 
 [![arxiv](http://img.shields.io/badge/arXiv-2011.10357-B31B1B.svg)](https://arxiv.org/abs/2011.10357)
 [![LICENSE](https://img.shields.io/github/license/kdkyum/RatchetDRL.svg)](https://github.com/kdkyum/RatchetDRL/blob/main/LICENSE)
@@ -12,7 +12,7 @@ Authors: Dong-Kyum Kim<sup>1</sup> and Hawoong Jeong<sup>1,2</sup><br>
 
 ## Introduction
 
-This repo contains source code for the runs in [Deep Reinforcement Learning for Feedback Control in a Collective Flashing Ratchet](https://arxiv.org/abs/2011.10357).
+This repo contains source code for the runs in [Deep reinforcement learning for feedback control in a collective flashing ratchet](https://arxiv.org/abs/2011.10357).
 
 ## Installation
 ```bash
