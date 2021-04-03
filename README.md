@@ -2,9 +2,9 @@
 ---
 # Deep reinforcement learning for feedback control in a collective flashing ratchet
 
+[![PRResearch](http://img.shields.io/badge/PRR-PhysRevResearch.3.L022002-13294B.svg)](https://link.aps.org/doi/10.1103/PhysRevResearch.3.L022002)
 [![arxiv](http://img.shields.io/badge/arXiv-2011.10357-B31B1B.svg)](https://arxiv.org/abs/2011.10357)
 [![LICENSE](https://img.shields.io/github/license/kdkyum/RatchetDRL.svg)](https://github.com/kdkyum/RatchetDRL/blob/main/LICENSE)
-[![PRResearch](http://img.shields.io/badge/PRR-PhysRevResearch.3.L022002-13294B.svg)](https://link.aps.org/doi/10.1103/PhysRevResearch.3.L022002)
 
 Authors: Dong-Kyum Kim<sup>1</sup> and Hawoong Jeong<sup>1,2</sup><br>
 
@@ -13,7 +13,7 @@ Authors: Dong-Kyum Kim<sup>1</sup> and Hawoong Jeong<sup>1,2</sup><br>
 
 ## Introduction
 
-This repo contains source code for the runs in [Deep reinforcement learning for feedback control in a collective flashing ratchet](https://arxiv.org/abs/2011.10357).
+This repo contains source code for the runs in [Deep reinforcement learning for feedback control in a collective flashing ratchet](https://link.aps.org/doi/10.1103/PhysRevResearch.3.L022002).
 
 ## Installation
 ```bash
