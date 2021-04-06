@@ -45,7 +45,7 @@ python main.py --env B --N 2
 # N=4, PPO algorithm with DeepSets (ds) architecture, 10 time-steps are delayed. 
 python main.py -a ds --env A_delay --N 4 --delay 10 
 
-# N=4, PPO algorithm with RNN architecture, 10 time-stpes are delayed.
+# N=4, PPO algorithm with RNN architecture, 10 time-steps are delayed.
 python main_rnn.py --env A_delay --N 4 --delay 10 
 ```
 
@@ -62,6 +62,25 @@ python main_rnn.py --env A_delay --N 4 --delay 10
 ## Acknowledgement
 
 This repository is built off the publicly released repository [openai/spinningup](https://github.com/openai/spinningup).
+
+## Bibtex
+Cite the following Bibtex.
+```bibtex
+@article{PhysRevResearch.3.L022002,
+  title = {Deep reinforcement learning for feedback control in a collective flashing ratchet},
+  author = {Kim, Dong-Kyum and Jeong, Hawoong},
+  journal = {Phys. Rev. Research},
+  volume = {3},
+  issue = {2},
+  pages = {L022002},
+  numpages = {6},
+  year = {2021},
+  month = {Apr},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevResearch.3.L022002},
+  url = {https://link.aps.org/doi/10.1103/PhysRevResearch.3.L022002}
+}
+```
 
 ## License
 
